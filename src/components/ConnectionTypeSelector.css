@@ -1,0 +1,96 @@
+/* ─── Connection Type Selector Popup ──────── */
+
+.orgnet-conn-selector {
+    position: fixed;
+    z-index: 1000;
+    min-width: 200px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.12),
+        0 2px 8px rgba(0, 0, 0, 0.06);
+    padding: 8px;
+    font-family: 'Inter', sans-serif;
+    animation: orgnet-conn-selector-in 0.15s ease-out;
+}
+
+@keyframes orgnet-conn-selector-in {
+    from {
+        opacity: 0;
+        transform: scale(0.92) translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.orgnet-conn-selector__title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #999;
+    padding: 4px 8px 6px;
+}
+
+.orgnet-conn-selector__list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.orgnet-conn-selector__item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1f2937;
+    transition: background 0.12s ease;
+    text-align: left;
+    width: 100%;
+}
+
+.orgnet-conn-selector__item:hover {
+    background: #f3f4f6;
+}
+
+.orgnet-conn-selector__swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8);
+}
+
+.orgnet-conn-selector__icon {
+    font-size: 14px;
+    flex-shrink: 0;
+    width: 20px;
+    text-align: center;
+}
+
+.orgnet-conn-selector__label {
+    flex: 1;
+}
+
+.orgnet-conn-selector__badge {
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: #e0e7ff;
+    color: #4f46e5;
+    padding: 2px 6px;
+    border-radius: 6px;
+}

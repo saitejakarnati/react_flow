@@ -1,0 +1,108 @@
+/* ─── Modal Overlay ──────────────────────── */
+
+.orgnet-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.orgnet-modal-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 24px;
+    width: 400px;
+    max-width: 90vw;
+}
+
+.orgnet-modal-header {
+    margin-bottom: 20px;
+}
+
+.orgnet-modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.orgnet-modal-subtitle {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: #666;
+}
+
+.orgnet-modal-parent-name {
+    color: var(--orgnet-primary, #1976d2);
+    font-weight: 600;
+}
+
+.orgnet-modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.orgnet-modal-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.orgnet-modal-field label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.orgnet-modal-field input {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+}
+
+.orgnet-modal-field input:focus {
+    border-color: var(--orgnet-primary, #1976d2);
+}
+
+.orgnet-modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+.orgnet-modal-btn {
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.orgnet-modal-btn--cancel {
+    background: #f3f4f6;
+    color: #666;
+}
+
+.orgnet-modal-btn--confirm {
+    background: var(--orgnet-primary, #1976d2);
+    color: #fff;
+}
+
+.orgnet-modal-btn--confirm:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}

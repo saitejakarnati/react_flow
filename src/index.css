@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.orgnet-flow-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.orgnet-flow-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.orgnet-flow-header__title {
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.orgnet-flow-header__badge {
+    font-size: 13px;
+    color: #666;
+    background: #f3f4f6;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.orgnet-flow-main {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+.orgnet-flow-canvas {
+    flex: 1;
+    width: 100%;
+}
+
+/* ─── Header right section ─────────────────────────────────── */
+.orgnet-flow-header__right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* ─── Undo / Redo Buttons ──────────────────────────────────── */
+.orgnet-undo-redo {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #f3f4f6;
+    border-radius: 8px;
+    padding: 2px;
+}
+
+.orgnet-undo-redo__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 28px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    font-size: 16px;
+    cursor: pointer;
+    color: #374151;
+    transition: all 0.15s ease;
+    user-select: none;
+}
+
+.orgnet-undo-redo__btn:hover:not(:disabled) {
+    background: #e5e7eb;
+    color: var(--orgnet-primary, #1976d2);
+}
+
+.orgnet-undo-redo__btn:active:not(:disabled) {
+    background: #d1d5db;
+    transform: scale(0.95);
+}
+
+.orgnet-undo-redo__btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
