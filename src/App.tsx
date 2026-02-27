@@ -4,14 +4,14 @@ import './index.css';
 
 // ─── Demo data for development ──────────────────────────────
 const demoNodes: NodeInput[] = [
-  { id: 'hq', label: 'Headquarters', description: 'Global HQ', memberCount: 150 },
-  { id: 'eng', label: 'Engineering', description: 'Product & Platform', memberCount: 65 },
-  { id: 'sales', label: 'Sales', description: 'Revenue & Growth', memberCount: 40 },
-  { id: 'hr', label: 'Human Resources', description: 'People & Culture', memberCount: 12 },
-  { id: 'frontend', label: 'Frontend Team', description: 'Web & Mobile UI', memberCount: 20 },
-  { id: 'backend', label: 'Backend Team', description: 'APIs & Services', memberCount: 25 },
-  { id: 'devops', label: 'DevOps', description: 'Infrastructure & CI/CD', memberCount: 10 },
-  { id: 'finance', label: 'Finance', description: 'Budgets & Accounting', memberCount: 8 },
+  { id: 'hq', label: 'Headquarters', description: 'Global HQ' },
+  { id: 'eng', label: 'Engineering', description: 'Product & Platform' },
+  { id: 'sales', label: 'Sales', description: 'Revenue & Growth' },
+  { id: 'hr', label: 'Human Resources', description: 'People & Culture' },
+  { id: 'frontend', label: 'Frontend Team', description: 'Web & Mobile UI' },
+  { id: 'backend', label: 'Backend Team', description: 'APIs & Services' },
+  { id: 'devops', label: 'DevOps', description: 'Infrastructure & CI/CD' },
+  { id: 'finance', label: 'Finance', description: 'Budgets & Accounting' },
 ];
 
 const demoEdges: EdgeInput[] = [

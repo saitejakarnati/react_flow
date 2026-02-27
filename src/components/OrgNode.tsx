@@ -1,8 +1,8 @@
 import { memo, useState } from 'react';
 import { Handle, Position, type NodeProps, type Node } from '@xyflow/react';
-import type { OrgNodeData } from './types';
+import type { OrgNode } from './types';
 
-type OrgNodeType = Node<OrgNodeData, 'orgNode'>;
+type OrgNodeType = Node<OrgNode, 'orgNode'>;
 
 function OrgNode({ id, data }: NodeProps<OrgNodeType>) {
     const [hovered, setHovered] = useState(false);
@@ -81,12 +81,6 @@ function OrgNode({ id, data }: NodeProps<OrgNodeType>) {
                     <div className="orgnet-node__name">{data.label}</div>
                     {data.description && (
                         <div className="orgnet-node__desc">{data.description}</div>
-                    )}
-                    {data.memberCount !== undefined && (
-                        <div className="orgnet-node__members">
-                            <span className="orgnet-node__members-icon">👥</span>
-                            {data.memberCount} members
-                        </div>
                     )}
                 </div>
             </div>

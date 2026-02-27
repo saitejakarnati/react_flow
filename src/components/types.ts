@@ -51,10 +51,9 @@ export const CONNECTION_TYPES: Record<ConnectionType, ConnectionTypeStyle> = {
 };
 
 /** Data attached to each org node */
-export interface OrgNodeData {
+export interface OrgNode {
     label: string;
     description?: string;
-    memberCount?: number;
     // Internal — injected by the widget, not user-facing
     onAddChild?: (parentId: string) => void;
     onEdit?: (nodeId: string) => void;
@@ -69,12 +68,12 @@ export interface NodeInput {
     id: string;
     label: string;
     description?: string;
-    memberCount?: number;
     type?: string
 }
 
 /** Simplified edge input for consumers */
 export interface EdgeInput {
+    id: string
     source: string;
     target: string;
     connectionType?: ConnectionType;
@@ -111,4 +110,6 @@ export interface OrgNetworkFlowProps {
      * making it easy to persist or sync with an external store.
      */
     onChange?: (nodes: NodeInput[], edges: EdgeInput[]) => void;
+    nodeTypes?: string[]
+
 }

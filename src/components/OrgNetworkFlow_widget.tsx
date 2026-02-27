@@ -85,7 +85,6 @@ export interface OrgNetworkFlowProps {
 export interface OrgNodeData {
     label: string;
     description?: string;
-    memberCount?: number;
     // Internal — injected by the widget, not user-facing
     onAddChild?: (parentId: string) => void;
     onEdit?: (nodeId: string) => void;
@@ -100,7 +99,6 @@ export interface NodeInput {
     id: string;
     label: string;
     description?: string;
-    memberCount?: number;
     type?: string
 }
 
@@ -113,13 +111,13 @@ export interface EdgeInput {
 
 // ─── Default demo data (used when no props are supplied) ────
 const DEFAULT_NODES: NodeInput[] = [
-    { id: 'hq', label: 'Headquarters', description: 'Global HQ', memberCount: 150 },
-    { id: 'eng', label: 'Engineering', description: 'Product & Platform', memberCount: 65 },
-    { id: 'sales', label: 'Sales', description: 'Revenue & Growth', memberCount: 40 },
-    { id: 'hr', label: 'Human Resources', description: 'People & Culture', memberCount: 12 },
-    { id: 'frontend', label: 'Frontend Team', description: 'Web & Mobile UI', memberCount: 20 },
-    { id: 'backend', label: 'Backend Team', description: 'APIs & Services', memberCount: 25 },
-    { id: 'devops', label: 'DevOps', description: 'Infrastructure & CI/CD', memberCount: 10 },
+    { id: 'hq', label: 'Headquarters', description: 'Global HQ' },
+    { id: 'eng', label: 'Engineering', description: 'Product & Platform' },
+    { id: 'sales', label: 'Sales', description: 'Revenue & Growth' },
+    { id: 'hr', label: 'Human Resources', description: 'People & Culture' },
+    { id: 'frontend', label: 'Frontend Team', description: 'Web & Mobile UI' },
+    { id: 'backend', label: 'Backend Team', description: 'APIs & Services' },
+    { id: 'devops', label: 'DevOps', description: 'Infrastructure & CI/CD' },
 ];
 
 const DEFAULT_EDGES: EdgeInput[] = [
@@ -137,7 +135,7 @@ function toRFNodes(inputs: NodeInput[]): Node<OrgNodeData>[] {
         id: n.id,
         type: 'orgNode',
         position: { x: 0, y: 0 },
-        data: { label: n.label, description: n.description, memberCount: n.memberCount },
+        data: { label: n.label, description: n.description },
     }));
 }
 
@@ -364,7 +362,7 @@ function OrgNetworkFlowInner(props: OrgNetworkFlowProps) {
                         }}
                         onReconnect={readOnly ? undefined : (v, e) => {
                             console.log(v, e, "onReconnect")
-                            onReconnect(v, e,)
+                            // onReconnect(v, e,)
                         }
                         }
                         onReconnectStart={readOnly ? undefined : (e) => {

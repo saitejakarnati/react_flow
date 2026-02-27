@@ -22,7 +22,7 @@ import DetailPanel from './DetailPanel';
 import EdgeDetailPanel from './EdgeDetailPanel';
 import ConnectionTypeSelector from './ConnectionTypeSelector';
 import type {
-    OrgNodeData,
+
     OrgNetworkFlowProps,
     NodeInput,
     EdgeInput,
@@ -32,6 +32,7 @@ import { CONNECTION_TYPES } from './types';
 import '@xyflow/react/dist/style.css';
 import './OrgNode.css';
 import './AddOrgModal.css';
+import type { OrgNodeData } from './OrgNetworkFlow_widget';
 
 // Re-export types for consumers
 export type { OrgNodeData, OrgNetworkFlowProps, NodeInput, EdgeInput, ConnectionType };
@@ -76,22 +77,22 @@ function getLayoutedElements(
 
 // ─── Default demo data (used when no props are supplied) ────
 const DEFAULT_NODES: NodeInput[] = [
-    { id: 'hq', label: 'Headquarters', description: 'Global HQ', memberCount: 150 },
-    { id: 'eng', label: 'Engineering', description: 'Product & Platform', memberCount: 65 },
-    { id: 'sales', label: 'Sales', description: 'Revenue & Growth', memberCount: 40 },
-    { id: 'hr', label: 'Human Resources', description: 'People & Culture', memberCount: 12 },
-    { id: 'frontend', label: 'Frontend Team', description: 'Web & Mobile UI', memberCount: 20 },
-    { id: 'backend', label: 'Backend Team', description: 'APIs & Services', memberCount: 25 },
-    { id: 'devops', label: 'DevOps', description: 'Infrastructure & CI/CD', memberCount: 10 },
+    { id: 'hq', label: 'Headquarters', description: 'Global HQ' },
+    { id: 'eng', label: 'Engineering', description: 'Product & Platform' },
+    { id: 'sales', label: 'Sales', description: 'Revenue & Growth' },
+    { id: 'hr', label: 'Human Resources', description: 'People & Culture' },
+    { id: 'frontend', label: 'Frontend Team', description: 'Web & Mobile UI' },
+    { id: 'backend', label: 'Backend Team', description: 'APIs & Services' },
+    { id: 'devops', label: 'DevOps', description: 'Infrastructure & CI/CD' },
 ];
 
 const DEFAULT_EDGES: EdgeInput[] = [
-    { source: 'hq', target: 'eng', connectionType: 'reports-to' },
-    { source: 'hq', target: 'sales', connectionType: 'reports-to' },
-    { source: 'hq', target: 'hr', connectionType: 'reports-to' },
-    { source: 'eng', target: 'frontend', connectionType: 'reports-to' },
-    { source: 'eng', target: 'backend', connectionType: 'reports-to' },
-    { source: 'eng', target: 'devops', connectionType: 'reports-to' },
+    { id: 'e1', source: 'hq', target: 'eng', connectionType: 'reports-to' },
+    { id: 'e2', source: 'hq', target: 'sales', connectionType: 'reports-to' },
+    { id: 'e3', source: 'hq', target: 'hr', connectionType: 'reports-to' },
+    { id: 'e4', source: 'eng', target: 'frontend', connectionType: 'reports-to' },
+    { id: 'e5', source: 'eng', target: 'backend', connectionType: 'reports-to' },
+    { id: 'e6', source: 'eng', target: 'devops', connectionType: 'reports-to' },
 ];
 
 // ─── Helpers: convert simplified inputs → React Flow shapes ─
@@ -100,7 +101,7 @@ function toRFNodes(inputs: NodeInput[]): Node<OrgNodeData>[] {
         id: n.id,
         type: 'orgNode',
         position: { x: 0, y: 0 },
-        data: { label: n.label, description: n.description, memberCount: n.memberCount },
+        data: { label: n.label, description: n.description },
     }));
 }
 
@@ -109,7 +110,7 @@ function toRFEdges(inputs: EdgeInput[]): Edge[] {
         const connType: ConnectionType = e.connectionType ?? 'reports-to';
         const style = CONNECTION_TYPES[connType];
         return {
-            id: `e-${e.source}-${e.target}-${connType}`,
+            id: e.id,
             source: e.source,
             target: e.target,
             type: 'smoothstep',
@@ -141,6 +142,7 @@ function toSimplifiedNodes(rfNodes: Node<OrgNodeData>[]): NodeInput[] {
 
 function toSimplifiedEdges(rfEdges: Edge[]): EdgeInput[] {
     return rfEdges.map((e) => ({
+        id: e.id,
         source: e.source,
         target: e.target,
         connectionType: ((e.data as Record<string, unknown>)?.connectionType as ConnectionType) ?? 'reports-to',
