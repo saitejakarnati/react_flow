@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import type { OrgNodeData, ConnectionType } from './types';
-import { CONNECTION_TYPES } from './types';
+
 import type { Node, Edge } from '@xyflow/react';
 import './DetailPanel.css';
+import type { OrgNodeProps } from './OrgNode';
+import { CONNECTION_TYPES } from '../App3';
 
 interface EdgeDetailPanelProps {
     edge: Edge;
-    allNodes: Node<OrgNodeData>[];
+    allNodes: Node<OrgNodeProps>[];
     onClose: () => void;
     onDelete?: (edgeId: string) => void;
-    onTypeChange?: (edgeId: string, newType: ConnectionType) => void;
+    onTypeChange?: (edgeId: string, newType: string) => void;
     readOnly?: boolean;
 }
 
@@ -25,14 +26,14 @@ export default function EdgeDetailPanel({
 }: EdgeDetailPanelProps) {
     const sourceNode = allNodes.find((n) => n.id === edge.source);
     const targetNode = allNodes.find((n) => n.id === edge.target);
-    const sourceData = sourceNode?.data as OrgNodeData | undefined;
-    const targetData = targetNode?.data as OrgNodeData | undefined;
-    const currentType = ((edge.data as Record<string, unknown>)?.connectionType as ConnectionType) ?? 'reports-to';
+    const sourceData = sourceNode?.data as OrgNodeProps | undefined;
+    const targetData = targetNode?.data as OrgNodeProps | undefined;
+    const currentType = ((edge.data as Record<string, unknown>)?.connectionType as string) ?? 'reports-to';
     const currentStyle = CONNECTION_TYPES[currentType];
 
     const [showTypeDropdown, setShowTypeDropdown] = useState(false);
 
-    const handleTypeChange = (newType: ConnectionType) => {
+    const handleTypeChange = (newType: string) => {
         onTypeChange?.(edge.id, newType);
         setShowTypeDropdown(false);
     };

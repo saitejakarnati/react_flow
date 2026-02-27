@@ -1,10 +1,23 @@
 import { memo, useState } from 'react';
 import { Handle, Position, type NodeProps, type Node } from '@xyflow/react';
-import type { OrgNode } from './types';
 
-type OrgNodeType = Node<OrgNode, 'orgNode'>;
+/** Data attached to each org node in React Flow */
+export interface OrgNodeProps {
+    label: string;
+    description?: string;
+    readOnly?: boolean;
+    onAddChild?: (parentId: string) => void;
+    onEdit?: (nodeId: string) => void;
+    onDelete?: (nodeId: string) => void;
+    [key: string]: any
 
-function OrgNode({ id, data }: NodeProps<OrgNodeType>) {
+}
+
+export type OrgNodeType<T extends string> = Node<OrgNodeProps, T>;
+
+
+
+function OrgNode({ id, data }: NodeProps<OrgNodeType<'orgNode'>>) {
     const [hovered, setHovered] = useState(false);
     const isReadOnly = data.readOnly ?? false;
 

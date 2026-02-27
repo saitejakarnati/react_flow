@@ -1,11 +1,12 @@
-import type { OrgNodeData } from './types';
+
 import type { Node, Edge } from '@xyflow/react';
 import './DetailPanel.css';
+import type { OrgNodeProps } from './OrgNode';
 
 interface DetailPanelProps {
-    node: Node<OrgNodeData>;
+    node: Node<OrgNodeProps>;
     edges: Edge[];
-    allNodes: Node<OrgNodeData>[];
+    allNodes: Node<OrgNodeProps>[];
     onClose: () => void;
     onEdit: (nodeId: string) => void;
     onDelete: (nodeId: string) => void;
@@ -23,17 +24,17 @@ export default function DetailPanel({
     onAddChild,
     readOnly = false,
 }: DetailPanelProps) {
-    const data = node.data as OrgNodeData;
+    const data = node.data as OrgNodeProps;
 
     const parentNodes = edges
         .filter((e) => e.target === node.id)
         .map((e) => allNodes.find((n) => n.id === e.source))
-        .filter(Boolean) as Node<OrgNodeData>[];
+        .filter(Boolean) as Node<OrgNodeProps>[];
 
     const childNodes = edges
         .filter((e) => e.source === node.id)
         .map((e) => allNodes.find((n) => n.id === e.target))
-        .filter(Boolean) as Node<OrgNodeData>[];
+        .filter(Boolean) as Node<OrgNodeProps>[];
 
     return (
         <div className="orgnet-detail-panel">
@@ -76,9 +77,9 @@ export default function DetailPanel({
                         {parentNodes.map((p) => (
                             <div key={p.id} className="orgnet-detail-panel__related-node">
                                 <span className="orgnet-detail-panel__related-icon">
-                                    {(p.data as OrgNodeData).label.charAt(0).toUpperCase()}
+                                    {(p.data as OrgNodeProps).label.charAt(0).toUpperCase()}
                                 </span>
-                                {(p.data as OrgNodeData).label}
+                                {(p.data as OrgNodeProps).label}
                             </div>
                         ))}
                     </div>
@@ -90,9 +91,9 @@ export default function DetailPanel({
                         {childNodes.map((c) => (
                             <div key={c.id} className="orgnet-detail-panel__related-node">
                                 <span className="orgnet-detail-panel__related-icon">
-                                    {(c.data as OrgNodeData).label.charAt(0).toUpperCase()}
+                                    {(c.data as OrgNodeProps).label.charAt(0).toUpperCase()}
                                 </span>
-                                {(c.data as OrgNodeData).label}
+                                {(c.data as OrgNodeProps).label}
                             </div>
                         ))}
                     </div>

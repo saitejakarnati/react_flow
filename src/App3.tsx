@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import OrgNetworkFlow, { type EdgeInput, type NodeInput } from './components/orgNetworkWidget';
-import type { ConnectionType } from './components/types';
+import OrgNetworkFlow from './components/orgNetworkWidget';
+import type { ConnectionTypeStyle, EdgeInput, NodeInput } from './components/types';
 import type { NodeChange } from '@xyflow/react';
 import AddOrgModal from './components/AddOrgModal';
 import './components/AddOrgModal.css';
@@ -25,6 +25,47 @@ const initialEdges: EdgeInput[] = [
     { id: 'e5', source: 'eng', target: 'backend', connectionType: 'reports-to', sourceHandle: 'bottom-source', targetHandle: 'top-target' },
     { id: 'e6', source: 'eng', target: 'devops', connectionType: 'reports-to', sourceHandle: 'bottom-source', targetHandle: 'top-target' },
 ];
+
+/** Available connection types between nodes */
+export type ConnectionType = 'reports-to' | 'collaborates' | 'funds' | 'advises';
+
+/** Registry mapping each ConnectionType to its visual style */
+export const CONNECTION_TYPES: Record<ConnectionType, ConnectionTypeStyle> = {
+    'reports-to': {
+        label: 'Reports To',
+        color: '#1976d2',
+        animated: false,
+        icon: '⬆',
+        edgeType: 'smoothstep',
+    },
+    collaborates: {
+        label: 'Collaborates',
+        color: '#16a34a',
+        strokeDasharray: '6 3',
+        animated: true,
+        icon: '🤝',
+        edgeType: 'default',
+    },
+    funds: {
+        label: 'Funds',
+        color: '#d97706',
+        strokeDasharray: '2 4',
+        animated: false,
+        icon: '💰',
+        edgeType: 'straight',
+    },
+    advises: {
+        label: 'Advises',
+        color: '#9333ea',
+        strokeDasharray: '8 4 2 4',
+        animated: true,
+        icon: '💡',
+        edgeType: 'step',
+    },
+};
+
+
+
 
 function App3() {
     const [nodes, setNodes] = useState<NodeInput[]>(initialNodes);
@@ -128,7 +169,7 @@ function App3() {
     }, []);
 
     // ─── Handle Node Changes from React Flow ────────────────
-    const handleNodeChange = useCallback((changes: NodeChange[]) => {
+    const handleNodeLayoutChange = useCallback((changes: NodeChange[]) => {
         console.log('Node changes:', changes);
         setNodes((prev) => {
             let updated = [...prev];
@@ -177,9 +218,9 @@ function App3() {
                 onEdgeAdd={(c) => { console.log('Edge added:', c); }}
                 onEdgeDelete={handleEdgeDelete}
                 onEdgeEdit={(edgeId, c) => { console.log('Edge reconnected:', edgeId, c); }}
-                onEdgeTypeChange={handleEdgeTypeChange}
                 onEdgesChange={(changes) => { console.log('Edge changes:', changes) }}
-                onNodesChange={handleNodeChange}
+                onNodesLayoutChange={handleNodeLayoutChange}
+                edgeTypes={CONNECTION_TYPES}
                 direction='TB'
             />
 

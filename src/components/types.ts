@@ -1,8 +1,7 @@
 // ─── Shared Types for OrgNetwork Widget ─────────────────────
 
-// ─── Connection Types ───────────────────────────────────────
-/** Available connection types between nodes */
-export type ConnectionType = 'reports-to' | 'collaborates' | 'funds' | 'advises';
+import type { NodeProps } from "@xyflow/react";
+import type { OrgNodeType } from "./OrgNode";
 
 /** Visual style definition for a connection type */
 export interface ConnectionTypeStyle {
@@ -15,101 +14,51 @@ export interface ConnectionTypeStyle {
     edgeType: 'default' | 'straight' | 'step' | 'smoothstep';
 }
 
-/** Registry mapping each ConnectionType to its visual style */
-export const CONNECTION_TYPES: Record<ConnectionType, ConnectionTypeStyle> = {
-    'reports-to': {
-        label: 'Reports To',
-        color: '#1976d2',
-        animated: false,
-        icon: '⬆',
-        edgeType: 'smoothstep',
-    },
-    collaborates: {
-        label: 'Collaborates',
-        color: '#16a34a',
-        strokeDasharray: '6 3',
-        animated: true,
-        icon: '🤝',
-        edgeType: 'default',       // bezier curve
-    },
-    funds: {
-        label: 'Funds',
-        color: '#d97706',
-        strokeDasharray: '2 4',
-        animated: false,
-        icon: '💰',
-        edgeType: 'straight',
-    },
-    advises: {
-        label: 'Advises',
-        color: '#9333ea',
-        strokeDasharray: '8 4 2 4',
-        animated: true,
-        icon: '💡',
-        edgeType: 'step',
-    },
-};
-
-/** Data attached to each org node */
-export interface OrgNode {
-    label: string;
-    description?: string;
-    // Internal — injected by the widget, not user-facing
-    onAddChild?: (parentId: string) => void;
-    onEdit?: (nodeId: string) => void;
-    onDelete?: (nodeId: string) => void;
-    readOnly?: boolean;
-    // Index signature required by React Flow's Record<string, unknown> constraint
-    [key: string]: unknown;
-}
-
-/** Simplified node input for consumers */
+/** Simplified node input for consumers (no nulls) */
 export interface NodeInput {
     id: string;
     label: string;
+    position: { x: number; y: number };
     description?: string;
-    type?: string
+    type?: string;
 }
 
-/** Simplified edge input for consumers */
+/** Simplified edge input for consumers (no nulls) */
 export interface EdgeInput {
-    id: string
+    id: string;
     source: string;
     target: string;
-    connectionType?: ConnectionType;
+    sourceHandle?: string;
+    targetHandle?: string;
+    connectionType?: string;
+    label?: string;
+    type?: string;
 }
 
 /** Props accepted by the OrgNetworkFlow React component */
 export interface OrgNetworkFlowProps {
-    /** Array of organisation nodes to display */
-    initialNodes?: NodeInput[];
-    /** Array of edges (parent → child relationships) */
-    initialEdges?: EdgeInput[];
-    /** Layout direction: top-to-bottom or left-to-right */
+    nodes: NodeInput[];
+    edges: EdgeInput[];
+    selectedNodeId?: string;
+    selectedEdgeId?: string;
     direction?: 'TB' | 'LR';
-    /** If true, hides add / edit / delete buttons */
     readOnly?: boolean;
-    /** Primary accent colour (CSS colour string). Default: #1976d2 */
     primaryColor?: string;
-    /** Fired after a child node is added */
-    onNodeAdd?: (parentId: string, name: string, description: string) => void;
-    /** Fired after a node is edited */
-    onNodeEdit?: (nodeId: string, name: string, description: string) => void;
-    /** Fired after a node (and its descendants) are deleted */
-    onNodeDelete?: (nodeId: string) => void;
-    /** Fired when a node is selected or deselected (null) */
-    onNodeSelect?: (nodeId: string | null) => void;
-    onEdgeSelect?: (edgeId: string | null) => void;
-    /** Fired when a new edge is connected via drag */
-    onEdgeConnect?: (source: string, target: string, type: ConnectionType) => void;
-    /** Fired when an edge's connection type is changed */
-    onEdgeTypeChange?: (edgeId: string, newType: ConnectionType) => void;
-    /**
-     * Fired after ANY mutation (add / edit / delete node, connect / disconnect edge).
-     * Receives the full current graph state as simplified NodeInput[] and EdgeInput[],
-     * making it easy to persist or sync with an external store.
-     */
-    onChange?: (nodes: NodeInput[], edges: EdgeInput[]) => void;
-    nodeTypes?: string[]
 
+    onNodeSelect?: (nodeId: string) => void;
+    onEdgeSelect?: (edgeId: string) => void;
+    onNodeAdd?: (parentId: string) => void;
+    onNodeEdit?: (nodeId: string) => void;
+    onNodeDelete?: (nodeId: string) => void;
+
+    onEdgeAdd?: (edge: { source: string; target: string; sourceHandle?: string; targetHandle?: string }) => void;
+    onEdgeEdit?: (edgeId: string, edge: { source: string; target: string; sourceHandle?: string; targetHandle?: string }) => void;
+    onEdgeDelete?: (edgeId: string) => void;
+    onEdgeTypeChange?: (edgeId: string, newType: string) => void;
+
+    onNodesLayoutChange?: (changes: any[]) => void; // Using any for React Flow Change types to keep it simple but can be refined
+    onEdgesChange?: (changes: any[]) => void;
+    nodeTypes?: Record<string, React.FC<NodeProps<OrgNodeType<string>>>>;
+    edgeTypes?: Record<string, ConnectionTypeStyle>;
+    onPaneClick?: () => void;
 }
